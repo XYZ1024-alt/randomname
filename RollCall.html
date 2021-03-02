@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="zhangke">
+    <title>点名器</title>
+    <link rel="shortcut icon" href="assets/RollCall.ico" />
+    <link rel="stylesheet" type="text/css" href="assets\css\main.css">
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="assets/Blob.js"></script>
+    <script src="assets/FileSaver.js"></script>
+</head>
+<body>
+    <div id="Boxs" style="width:940px;height:530px;margin:auto;">
+        <div style="width:200px;height:100%;float:left;">
+            <textarea id="list" name="text" style="width:200px; height:500px; border:solid 1px#DCDCDC; border-radius:10px; resize:none;""></textarea>
+        </div>
+        <div style="width:500px;height:100%;float:left;margin:auto 20px;">
+            <div>
+                <p id="displayer"></p>
+                <div style="width:248px;height:50px;margin:auto;">
+                    <span id="start" class="button">开始</span>
+                    <span id="stop" class="button">结束</span>
+                </div>
+            </div>
+            <p>请先把名单粘贴到左边文本区域</p>
+            <p>空格：开始/暂停</p>
+            <form style="margin-top:20px;">
+            <label><input id="random" type="checkbox"/>:随机顺序</label>
+            <br />
+            <label><input id="debar" type="checkbox" checked="checked" />:排除已点</label>
+            <br />
+            <label><input id="file" type="file"/>请选择编码为UTF-8的文件</label>
+            <br />
+            <label><input id="save" type="button" value="保存列表" /></label>
+            </form>
+        </div>
+        <div id="calllist" style="width:200px;height:90%;float:left;margin-top:20px;padding-top:25px;background:#DCDCDC;overflow:auto;overflow-x:hidden;">
+        <h3 style="padding-left:20px;">已点名单:</h3>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function RollCall(){
+            var Displayer=document.getElementById("displayer");//显示器
+            var CallList=document.getElementById("calllist");//已点名单
+            var list;//名单
+            var isRun="stop";//当前正在执行的功能
+            var Suff=new Array();;//名单顺序
+            var trS=0;//数组下标
+            var status=0;
+            var order=false,/*检查点名顺序*/
+                alrStr=true;/*检查点名规则*/
+            document.getElementById("start").onclick=function(){
+                Start();
+            };
+            document.getElementById("stop").onclick=function(){
+                Stop();
+            };
+            document.getElementById("file").onchange=function(){
+                upload(this);
+            }
+            document.getElementById("save").onclick=function(){
+                Save();
+            }
+            /*LocalStorage*/
+/*            var LocalStr=function(key){
+                if(window.localStorage){
+                    list=document.getElementById("list").value;
+                    if(list!=""&&list!=" "){
+                        var Strs=list.split("\n");
+                        list=List(Strs);
+                        if(localStorage.getItem(key)==(null||undefined))
+                            localStorage.setItem(key,list);
+                    }else{
+                        Displayer.style.lineHeight="145px";
+                        Displayer.innerHTML="<span style='font-size:70px;'>请先输入名单!</span>";//名单为空则显示提示
+                    }
+                }else{
+                    Displayer.style.lineHeight="";
+                    Displayer.innerHTML="<span style='font-size:30px;'>抱歉，当前游览器不支持储存</span>";
+                }
+            }*/
+            /*开始*/
+            var Start=function(){
+                if(isRun!="start"){
+                    isRun="start";
+                    order=document.getElementById('random').checked;
+                    alrStr=document.getElementById('debar').checked;
+                    list=document.getElementById("list").value;
+                    var Strs=list.split("\n");
+                        list=List(Strs);
+                        console.log("list:"+list);
+                    if(list!=""&&list!=" "){
+                        Suff=Order(list);
+                        Displayer.style.lineHeight="165px";
+                        Beat();
+                    }else{
+                        Displayer.style.lineHeight="145px";
+                        Displayer.innerHTML="<span style='font-size:70px;'>请先输入名单!</span>";//名单为空则显示提示
+                        isRun="stop";
+                    }
+                }
+            }
+
+            /*循环列表*/
+            var Beat=function() {
+                trS++;
+                if(trS>=list.length)
+                    trS=0;
+                Displayer.innerHTML=list[Suff[trS]];
+                status=setTimeout(Beat,10);//每0.01秒循环一次
+            }
+
+            /*停止*/
+            var Stop=function() {
+                if (isRun!="stop") {
+                    isRun="stop";
+                    // list=Senior(list);
+                    list=AlrStr(list);
+                    clearTimeout(status);
+                }
+            }
+
+            /*格式化名单*/
+            var List=function(dir){
+                for(var i=0;i<dir.length;i++){
+                    while(dir[i].indexOf(" ")!=-1)
+                        dir[i]=dir[i].replace(" ","");//去空格
+                    if(dir[i]==""||dir[i]=="\n"||dir[i]=="undefined")
+                        for(var j=i;j<dir.length;j++)
+                            if(j==dir.length-1)
+                                dir.length-=1;
+                            else
+                                dir[j]=dir[j+1];
+                }
+                return dir;
+            }
+            /*点名顺序*/
+            var Order=function(dir){
+                var dir2=new Array();
+                if(order){
+                    var Min=0,Max=dir.length-1,Jud;
+                    var Range=Max-Min;
+                    for(var i=0;i<dir.length;i++){
+                        Jud=false;
+                        var Rand=Math.random();
+                        var Num=Min+Math.round(Rand*Range); //四舍五入
+                        if(i==0){
+                            dir2[i]=Num;
+                        }else{
+                            for(var j=0;j<i;j++){
+                                if(Num==dir2[j]){
+                                    i--;
+                                    Jud=true;
+                                    break;
+                                }
+                            }
+                            if(!Jud){
+                                dir2[i]=Num;
+                            }
+                        }
+
+                    }
+                }else{
+                    for(var i=0;i<dir.length;i++)
+                        dir2[i]=i;
+                }
+                return dir2;
+            }
+            /*排除已点*/
+            var AlrStr=function(dir){
+                var Strs="";
+                for(var i=0;i<dir.length;i++){
+                    if(i==Suff[trS]){
+                        var p=document.createElement("p");
+                        var dir2;
+                        if((CallList.childNodes.length-2)<10)
+                            dir2="&nbsp;&nbsp;"+(CallList.childNodes.length-2);
+                        else
+                            dir2=CallList.childNodes.length-2;
+                        p.innerHTML=dir2+". "+dir[i];
+                        CallList.appendChild(p);
+                    }
+                    if(alrStr){
+                        if (i>=Suff[trS])
+                            dir[i]=dir[i+1];
+                        if(i==dir.length-1)
+                            dir.length-=1;
+                        else{
+                            if(dir[i]!= ""||dir[i]!="\n"||dir[i]!="undefined")
+                                Strs+=dir[i]+"\n";
+                        }
+                    }else{
+                        if(dir[i]!=""||dir[i]!="\n"||dir[i]!="undefined")
+                        Strs+=dir[i]+"\n";
+                    }
+                }
+                document.getElementById("list").value=Strs;
+                return dir;
+            }
+            /*取读文件*/
+            var upload=function(input){
+                //支持chrome IE10
+                if(window.FileReader){
+                    var file=input.files[0];
+                    filename=file.name.split(".")[0];
+                    var reader=new FileReader();
+                    reader.onload=function() {
+                        document.getElementById("list").value=this.result;
+                    }
+                    reader.readAsText(file);
+                } 
+                //支持IE 7 8 9 10
+                else if (typeof window.ActiveXObject!='undefined'){
+                    var xmlDoc;
+                    var fso=new ActiveXObject("Scripting.FileSystemObject");
+                    var f1=fso.GetFile(input.value);
+                    document.getElementById("list").value=f1.DateLastModified;
+/*                    xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+                    xmlDoc.async = false;
+                    xmlDoc.load(input.value);
+                    alert(xmlDoc.xml);*/
+                } 
+                //支持FF
+                else if(document.implementation&&document.implementation.createDocument){
+                    var xmlDoc;
+                    xmlDoc=document.implementation.createDocument("", "", null);
+                    xmlDoc.async=false;
+                    xmlDoc.load(input.value);
+                    document.getElementById("list").value=xmlDoc.xml;
+                }else{
+                    Displayer.innerHTML='Error';
+                }
+            }
+            var Save=function(){
+                list=document.getElementById("list").value;
+                var Strs=list.split("\n");
+                var Jud=List(Strs);
+                if(Jud!=""&&Jud!=" "){
+                    var blob=new Blob([list.replace(/\n/g,"\r\n")], {type:"text/plain;charset="+document.characterSet});
+                    saveAs(blob, "1.txt");
+                }else{
+                    Displayer.style.lineHeight="145px";
+                    Displayer.innerHTML="<span style='font-size:70px;'>请先输入名单!</span>";
+                }
+            }
+        }
+        /*容器垂直居中*/
+        function Vertcal() {
+            var Div=document.getElementById('Boxs');
+            var WinHeight=0;
+            if (window.innerHeight)
+                WinHeight=window.innerHeight;
+            else if ((document.body)&&(document.body.clientHeight))
+                WinHeight=document.body.clientHeight;
+            if (document.documentElement&&document.documentElement.clientHeight)
+                WinHeight=document.documentElement.clientHeight;
+            Div.style.marginTop=(WinHeight-parseInt(Div.style.height))/2+'px';
+        }
+        RollCall();
+        window.onload=Vertcal;
+        window.onresize=Vertcal;
+    </script>
+</body>
+</html>
