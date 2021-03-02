@@ -30,7 +30,7 @@
             <br />
             <label><input id="debar" type="checkbox" checked="checked" />:排除已点</label>
             <br />
-            <label><input id="file" type="file"/>请选择编码为UTF-8的文件</label>
+            <label><input id="file" accept="text/plain" type="file"/>请选择编码为UTF-8的文件</label>
             <br />
             <label><input id="save" type="button" value="保存列表" /></label>
             </form>
@@ -89,7 +89,7 @@
                     alrStr=document.getElementById('debar').checked;
                     list=document.getElementById("list").value;
                     var Strs=list.split("\n");
-                        list=List(Strs);
+                        list=['谌雅兰','程佳仪','程文佳','单明宇','董暄','樊景宇','何莹易','胡文豪','胡英杰','胡之恺','黄俊逸','黄文兴','姜浩轩','蒋荣本','李文浩','李文欣','李昕航','李梓轩','刘熙蕊','刘振轩','卢慧雯','卢信','罗圣哲','罗世杰','闵富豪','陶芦艳','涂峻珲','涂晞','涂彦','万锦辉','万宁豪','吴德文','夏莉娜','谢进','谢雨豪','熊丽晴','徐宇豪','徐紫悦','杨宇坤','叶义凡','周俊康','周丽萍','朱正旺']
                         console.log("list:"+list);
                     if(list!=""&&list!=" "){
                         Suff=Order(list);
