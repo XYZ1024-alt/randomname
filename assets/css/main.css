@@ -1,34 +1,52 @@
 html *
 {
-   font-size: 1em !important;
+   color: #EAEAEA;
+   background-color: #333333;
 }
+
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+    width:12px;
+    }
+    /* 滚动槽 */
+    ::-webkit-scrollbar-track {
+    -webkit-box-shadow:inset006pxrgba(0,0,0,0.3);
+    border-radius:10px;
+    }
+    /* 滚动条滑块 */
+    ::-webkit-scrollbar-thumb {
+    border-radius:10px;
+    background:rgba(0,0,0,0.1);
+    -webkit-box-shadow:inset006pxrgba(0,0,0,0.5);
+    }
+    ::-webkit-scrollbar-thumb:window-inactive {
+    background:rgba(255,0,0,0.4);
+    }
 
 *{margin: 0;padding: 0;}
         a{text-decoration: none;}
         ul,li{list-style: none;}
         body{font-size: 14px;font-family: "微软雅黑";}
         .button {
-        width:100px;
-        height:30px;
-        background:#E27575;
-        border:none;
-        border-radius:3px;
-        box-shadow:1px 1px 5px #B6B6B6;
-        color:#FFF;
-        display:inline-block;
-        cursor:pointer;
-        text-align:center;
-        text-shadow:1px 1px 1px #9E3F3F;
-        line-height:30px;
-        margin:10px;
-        }
-        .button:hover {
-            background: #CF7A7A;
+            margin-left: 5px;
+            background-color: #ffd602;
+            color: #333;
+            display: -webkit-inline-box;
+            display: inline-flex;
+            -webkit-box-align: center;
+            align-items: center;
+            border-radius: .25rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%);
+            font-size: .875rem;
+            font-weight: 600;
+            transition-property: all;
+            transition-duration: .1s;
+            padding: .5rem 1rem;
         }
         #displayer{
             width:500px;
             height:165px;
-            background: #F7F7F7;
+            background: #444444;
             margin:auto;
             margin-top:50px;
             font-size:90px;

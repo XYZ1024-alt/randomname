@@ -13,28 +13,28 @@
 <body>
     <div id="Boxs" style="width:940px;height:530px;margin:auto;">
         <div style="width:200px;height:100%;float:left;">
-            <textarea id="list" name="text" style="width:200px; height:500px; border:solid 1px#DCDCDC; border-radius:10px; resize:none;""></textarea>
+            <textarea id="list" name="text" style="font-size: 1rem; color: #EAEAEA; background-color: #444444; width:200px; height:500px; border:solid 1px #999999; border-radius:10px; resize:none;"></textarea>
         </div>
         <div style="width:500px;height:100%;float:left;margin:auto 20px;">
             <div>
                 <p id="displayer"></p>
-                <div style="width:248px;height:50px;margin:auto;">
+                <div style="width:248px;height:50px;margin:auto; padding-top: 20px; text-align: center;">
                     <span id="start" class="button">开始</span>
                     <span id="stop" class="button">结束</span>
                 </div>
             </div>
             <p>空格：开始/暂停</p>
-            <form style="margin-top:20px;">
-            <label><input id="random" type="checkbox"/>:随机顺序</label>
+            <form style="margin-top:20px; text-align: center;">
+            <label><input id="random" type="checkbox"/>随机顺序</label>
             <br />
-            <label><input id="debar" type="checkbox" checked="checked" />:排除已点</label>
+            <label><input id="debar" type="checkbox" checked="checked" />排除已点</label>
             <br />
             <label><input id="file" accept="text/plain" type="file"/></label>
             <br />
             <label><input id="save" type="button" value="保存列表" /></label>
             </form>
         </div>
-        <div id="calllist" style="width:200px;height:90%;float:left;margin-top:20px;padding-top:25px;background:#DCDCDC;overflow:auto;overflow-x:hidden;">
+        <div id="calllist" style="width:200px;height:90%;float:left;margin-top:20px;padding-top:25px;background:#444444;overflow:auto;overflow-x:hidden;">
         <h3 style="padding-left:20px;">已点名单:</h3>
         </div>
     </div>
