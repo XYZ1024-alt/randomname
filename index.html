@@ -2,9 +2,9 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="Author" content="zhangke">
     <title>点名器</title>
-    <link rel="shortcut icon" href="assets/RollCall.ico" />
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no;">
+    <link rel="shortcut icon" href="assets\img\RollCall.ico" />
     <link rel="stylesheet" type="text/css" href="assets\css\main.css">
     <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
     <script src="assets/Blob.js"></script>
@@ -23,13 +23,10 @@
                     <span id="stop" class="button">结束</span>
                 </div>
             </div>
-            <p>空格：开始/暂停</p>
             <form style="margin-top:20px; text-align: center;">
-            <label><input id="random" type="checkbox"/>随机顺序</label>
+            <label class="l"><input id="random" type="checkbox"/>随机顺序</label>
             <br />
-            <label><input id="debar" type="checkbox" checked="checked" />排除已点</label>
-            <br />
-            <label><input id="file" accept="text/plain" type="file"/></label>
+            <label class="l"><input id="debar" type="checkbox" checked="checked" />排除已点</label>
             <br />
             <label><input id="save" type="button" value="保存列表" /></label>
             </form>
@@ -56,9 +53,6 @@
             document.getElementById("stop").onclick=function(){
                 Stop();
             };
-            document.getElementById("file").onchange=function(){
-                upload(this);
-            }
             document.getElementById("save").onclick=function(){
                 Save();
             }

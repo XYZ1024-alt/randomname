@@ -7,27 +7,32 @@ html *
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
     width:12px;
-    }
-    /* 滚动槽 */
-    ::-webkit-scrollbar-track {
+}
+
+/* 滚动槽 */
+::-webkit-scrollbar-track {
     -webkit-box-shadow:inset006pxrgba(0,0,0,0.3);
     border-radius:10px;
-    }
-    /* 滚动条滑块 */
-    ::-webkit-scrollbar-thumb {
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
     border-radius:10px;
     background:rgba(0,0,0,0.1);
     -webkit-box-shadow:inset006pxrgba(0,0,0,0.5);
-    }
-    ::-webkit-scrollbar-thumb:window-inactive {
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
     background:rgba(255,0,0,0.4);
-    }
+}
 
 *{margin: 0;padding: 0;}
         a{text-decoration: none;}
         ul,li{list-style: none;}
         body{font-size: 14px;font-family: "微软雅黑";}
         .button {
+            font-family: proxima_nova_softsemibold;
+            user-select: none;
             margin-left: 5px;
             background-color: #ffd602;
             color: #333;
@@ -37,8 +42,9 @@ html *
             align-items: center;
             border-radius: .25rem;
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%);
-            font-size: .875rem;
-            font-weight: 600;
+            font-size: 2rem;
+            font-weight: 10px;
+            line-height: 30px;
             transition-property: all;
             transition-duration: .1s;
             padding: .5rem 1rem;
@@ -58,6 +64,31 @@ html *
             padding-left:20px;
         }
 
-#Boxs {
-    padding-top: 30px;
+#save {
+    margin-left: 5px;
+    background-color: #ffd602;
+    color: #333;
+    display: -webkit-inline-box;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: .25rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%);
+    font-size: .875rem;
+    font-weight: 600;
+    transition-property: all;
+    transition-duration: .1s;
+    padding: .5rem 1rem;
+}
+
+#random {
+    -webkit-transition: background-color 0.3s;
+            transition: background-color 0.3s;
+            background-color: #fff;
+            border: 1px solid #d7d7d7;
+            border-radius: 3px;
+            width: 16px;
+            height: 16px;
+            vertical-align:middle;
+            margin: 0 5px;
 }
