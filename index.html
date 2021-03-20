@@ -227,7 +227,7 @@
                 var Jud=List(Strs);
                 if(Jud!=""&&Jud!=" "){
                     var blob=new Blob([list.replace(/\n/g,"\r\n")], {type:"text/plain;charset="+document.characterSet});
-                    saveAs(blob, "1.txt");
+                    saveAs(blob, "list.txt");
                 }else{
                     Displayer.style.lineHeight="145px";
                     Displayer.innerHTML="<span style='font-size:70px;'>请先输入名单!</span>";
