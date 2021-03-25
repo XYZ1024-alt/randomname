@@ -97,9 +97,9 @@
             /*循环列表*/
             var Beat=function() {
                 trS++;
-                if(trS>=list2.length)
+                if(trS>=list.length)
                     trS=0;
-                Displayer.innerHTML=list2[Suff[trS]];
+                Displayer.innerHTML=list[Suff[trS]];
                 status=setTimeout(Beat,10);
             }
 
@@ -108,7 +108,7 @@
                 if (isRun!="stop") {
                     isRun="stop";
                     // list=Senior(list);
-                    list2=AlrStr(list2);
+                    list=AlrStr(list);
                     clearTimeout(status);
                 }
             }
