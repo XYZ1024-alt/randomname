@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>点名器</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no;">
     <link rel="shortcut icon" href="assets\img\RollCall.ico" />
     <link rel="stylesheet" type="text/css" href="assets\css\main.css">
     <script src="https://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
@@ -37,8 +37,7 @@
         function RollCall(){
             var Displayer=document.getElementById("displayer");//显示器
             var CallList=document.getElementById("calllist");//已点名单
-            var list2
-            var list
+            var list;//名单
             var isRun="stop";//当前正在执行的功能
             var Suff=new Array();;//名单顺序
             var trS=0;//数组下标
@@ -73,17 +72,15 @@
                 }
             }*/
             /*开始*/
-
             var Start=function(){
                 if(isRun!="start"){
                     isRun="start";
                     list=document.getElementById("list").value;
                     var Strs=list.split("\n");
-                        list=['谌雅兰','程佳仪','程文佳','单明宇','董暄','樊景宇','何莹易','胡文豪','胡之恺','黄文兴','蒋荣本','李文浩','李文欣','李昕航','李梓轩','刘熙蕊','刘振轩','卢慧雯','卢信','罗圣哲','罗世杰','闵富豪','陶芦艳','涂峻珲','涂晞','涂彦','万锦辉','万宁豪','吴德文','夏莉娜','谢进','谢雨豪','熊丽晴','徐宇豪','徐紫悦','杨宇坤','叶义凡','周俊康','周丽萍','朱正旺','胡英杰']
-                        list2=['谌雅兰','程佳仪','程文佳','单明宇','董暄','樊景宇','何莹易','胡文豪','胡之恺','黄文兴','黄俊逸','姜浩轩','蒋荣本','李文浩','李文欣','李昕航','李梓轩','刘熙蕊','刘振轩','卢慧雯','卢信','罗圣哲','罗世杰','闵富豪','陶芦艳','涂峻珲','涂晞','涂彦','万锦辉','万宁豪','吴德文','夏莉娜','谢进','谢雨豪','熊丽晴','徐宇豪','徐紫悦','杨宇坤','叶义凡','周俊康','周丽萍','朱正旺','胡英杰']
+                    list=['谌雅兰','程佳仪','程文佳','单明宇','董暄','樊景宇','何莹易','胡文豪','胡之恺','黄文兴','蒋荣本','胡英杰','李文欣','李昕航','李梓轩','刘熙蕊','刘振轩','卢慧雯','卢信','罗圣哲','罗世杰','闵富豪','陶芦艳','涂峻珲','涂晞','涂彦','万锦辉','万宁豪','吴德文','夏莉娜','谢进','谢雨豪','熊丽晴','徐宇豪','徐紫悦','杨宇坤','叶义凡','周俊康','周丽萍','朱正旺','李文浩','胡英杰','胡英杰','胡英杰','胡英杰','胡英杰','胡英杰','胡英杰','胡英杰','胡英杰','胡英杰']
                         console.log("list:"+list);
-                    if(list2!=""&&list2!=" "){
-                        Suff=Order(list2);
+                    if(list!=""&&list!=" "){
+                        Suff=Order(list);
                         Displayer.style.lineHeight="165px";
                         Beat();
                     }else{
@@ -100,7 +97,7 @@
                 if(trS>=list.length)
                     trS=0;
                 Displayer.innerHTML=list[Suff[trS]];
-                status=setTimeout(Beat,10);
+                status=setTimeout(Beat,10);//每0.01秒循环一次
             }
 
             /*停止*/
@@ -114,7 +111,7 @@
             }
 
             /*格式化名单*/
-            var List2=function(dir){
+            var List=function(dir){
                 for(var i=0;i<dir.length;i++){
                     while(dir[i].indexOf(" ")!=-1)
                         dir[i]=dir[i].replace(" ","");//去空格
@@ -198,7 +195,7 @@
                     filename=file.name.split(".")[0];
                     var reader=new FileReader();
                     reader.onload=function() {
-                        list = this.result;
+                        document.getElementById("list").value=this.result;
                     }
                     reader.readAsText(file);
                 } 
@@ -230,7 +227,7 @@
                 var Jud=List(Strs);
                 if(Jud!=""&&Jud!=" "){
                     var blob=new Blob([list.replace(/\n/g,"\r\n")], {type:"text/plain;charset="+document.characterSet});
-                    saveAs(blob, "list.txt");
+                    saveAs(blob, "1.txt");
                 }else{
                     Displayer.style.lineHeight="145px";
                     Displayer.innerHTML="<span style='font-size:70px;'>请先输入名单!</span>";
